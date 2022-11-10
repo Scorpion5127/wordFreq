@@ -1,0 +1,52 @@
+import threading
+import time
+
+def getWordsDict(filename):
+  wordfreq={}
+  file= open(filename, 'r')
+  for line in file:
+    list=line.split()
+    for item in list:
+      if(item in wordfreq):
+        wordfreq[item]+=1
+      else:
+        wordfreq[item]=1
+  return wordfreq
+
+def setWordsFile(wordfreq, filename):
+  f = open(filename, "w")
+  for word, freq in wordfreq.items():
+    f.write('%s:%s\n' % (word, freq))
+  f.close()
+  
+
+wordCount=getWordsDict('test.txt')
+setWordsFile(wordCount, 'wordcountfile')
+
+
+values = wordCount.values()
+total = sum(values)
+print("Number of words is {}".format(total))
+
+
+
+
+th1 = threading.Thread(target=getWordsDict,args=('test.txt',))
+th2 = threading.Thread(target=setWordsFile,args=(getWordsDict('test.txt'),'output.txt'))
+
+th1.start()
+
+
+start = time.time()
+th1.join()
+stop_th1 = time.time()
+
+th2.start()
+th2.join()
+stop_th2 = time.time()
+
+
+print('getWordsDict is {} seconds.'.format(stop_th1-start))
+
+print('setWordsFile is {} seconds.'.format(stop_th2-stop_th1))
+
