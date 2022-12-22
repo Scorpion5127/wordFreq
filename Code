@@ -39,7 +39,6 @@ print("Number of words is {}".format(total))
 
 ########Make sure the text filename is correct
 th1 = threading.Thread(target=getWordsDict,args=('words.txt',))
-########Make sure the text filenames is correct, the output file can be change.
 th2 = threading.Thread(target=setWordsFile,args=(getWordsDict('words.txt'),'output.txt'))
 
 th1.start()
