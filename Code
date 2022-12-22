@@ -28,7 +28,7 @@ def setWordsFile(wordfreq, filename):
 ####Total word Count
 ########Make sure the text filename is correct
 wordCount=getWordsDict('words.txt')
-setWordsFile(wordCount, 'wordcountfile')
+
 
 
 values = wordCount.values()
@@ -39,6 +39,7 @@ print("Number of words is {}".format(total))
 
 ########Make sure the text filename is correct
 th1 = threading.Thread(target=getWordsDict,args=('words.txt',))
+########Make sure the text filename is correct, the 'output.txt' file is were the dictionary list is written into
 th2 = threading.Thread(target=setWordsFile,args=(getWordsDict('words.txt'),'output.txt'))
 
 th1.start()
