@@ -1,5 +1,8 @@
 import threading
 import time
+import re
+
+regex = re.compile('[^a-z]')
 
 def getWordsDict(filename):
   wordfreq={}
@@ -8,9 +11,9 @@ def getWordsDict(filename):
     list=line.split()
     for item in list:
       if(item in wordfreq):
-        wordfreq[item]+=1
+        wordfreq[regex.sub('',item.lower())]+=1
       else:
-        wordfreq[item]=1
+        wordfreq[regex.sub('',item.lower())]=1
   return wordfreq
 
 def setWordsFile(wordfreq, filename):
@@ -20,7 +23,10 @@ def setWordsFile(wordfreq, filename):
   f.close()
   
 
-wordCount=getWordsDict('test.txt')
+
+####Total word Count
+########Make sure the text filename is correct
+wordCount=getWordsDict('words.txt')
 setWordsFile(wordCount, 'wordcountfile')
 
 
@@ -30,9 +36,9 @@ print("Number of words is {}".format(total))
 
 
 
-
-th1 = threading.Thread(target=getWordsDict,args=('test.txt',))
-th2 = threading.Thread(target=setWordsFile,args=(getWordsDict('test.txt'),'output.txt'))
+########Make sure the text filename is correct
+th1 = threading.Thread(target=getWordsDict,args=('words.txt',))
+th2 = threading.Thread(target=setWordsFile,args=(getWordsDict('words.txt'),'output.txt'))
 
 th1.start()
 
