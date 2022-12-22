@@ -8,12 +8,13 @@ def getWordsDict(filename):
   wordfreq={}
   file= open(filename, 'r')
   for line in file:
-    list=line.split()
+    list=line.lower().split()
     for item in list:
+      item=regex.sub('',item.lower())
       if(item in wordfreq):
-        wordfreq[regex.sub('',item.lower())]+=1
+        wordfreq[regex.sub('',item)]+=1
       else:
-        wordfreq[regex.sub('',item.lower())]=1
+        wordfreq[regex.sub('',item)]=1
   return wordfreq
 
 def setWordsFile(wordfreq, filename):
